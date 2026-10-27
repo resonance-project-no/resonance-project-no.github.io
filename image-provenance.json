@@ -7,5 +7,14 @@
   "generatedMeasurements": true,
   "quantitativeADC": false,
   "publication": "Synthetic edition only",
-  "updated": "2026-10-27"
+  "updated": "2026-10-27",
+  "sequenceRefresh": {
+    "dwi": "dwi-v4.png: coarser qualitative high-b EPI appearance",
+    "adc": "adc-v2.png: qualitative map-like contrast with lower-signal lesion regions; independently AI-generated, not fitted from b-value images",
+    "t2": "t2-v2.png: illustrative water-only T2 appearance",
+    "source": "User-confirmed cleared synthetic reference only",
+    "restrictedScansUsedForGeneration": false,
+    "validatedRegistration": false,
+    "quantitativeMRI": false
+  }
 }
