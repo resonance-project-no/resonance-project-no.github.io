@@ -1,0 +1,11 @@
+{
+  "edition": "synthetic",
+  "mriImages": "AI-generated illustrations based only on a user-confirmed synthetic reference",
+  "derivedImages": "Illustrative transformations of synthetic source pixels",
+  "geometry": "Procedural geometry and artist-defined contours derived from synthetic reference only",
+  "patientDataIncluded": false,
+  "generatedMeasurements": true,
+  "quantitativeADC": false,
+  "publication": "Synthetic edition only",
+  "updated": "2026-10-27"
+}

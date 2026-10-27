@@ -1,0 +1,1 @@
+RESONANCE synthetic MRI illustrations. All MRI image files in this folder are generated examples based on a user-confirmed synthetic reference. No patient scans or patient-derived meshes are included.

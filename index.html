@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#092c3a">
+<title>RESONANCE | Breast MRI research</title>
+<meta name="description" content="Explore RESONANCE breast MRI research through illustrative examples of preprocessing, segmentation, lesion localization and enhancement kinetics.">
+<link rel="icon" href="assets/mark.svg?v=paired-edition-20261027-1">
+<link rel="stylesheet" href="style.css?v=paired-edition-20261027-1">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="header">
+<a class="brand" href="#top">
+<img src="assets/resonance-symbol.svg?v=paired-edition-20261027-1" alt="RESONANCE breast MRI logo">
+<span>RESONANCE<small>BREAST MRI · AI</small>
+</span>
+</a>
+<nav id="navigation" aria-label="Main navigation">
+<a href="#workflow">Workflow</a>
+<a href="#explore">Explore</a>
+<a href="#report">Reporting</a>
+<a href="#team">Team</a>
+<a href="careers.html">Careers</a>
+<a class="nav-contact" href="https://www.linkedin.com/in/neel-kanwal/" target="_blank" rel="noopener">Contact ↗</a>
+</nav>
+<button class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="navigation">☰</button>
+</header>
+<main id="main">
+<section class="hero" id="top">
+<div class="hero-halo" aria-hidden="true">
+</div>
+<div class="wrap hero-grid">
+<div>
+<div class="eyebrow">RESEARCH PROJECT · NON-CONTRAST BREAST MRI</div>
+<h1>Reliable lesion detection<br>& segmentation in<br>
+<em>dense breasts.</em>
+</h1>
+<p class="hero-lead">Developing AI-assisted methods for breast MRI to detect and segment lesions despite motion and variation between scans.</p>
+<a class="button gradient" href="#explore">Explore the MRI <span>↗</span>
+</a>
+</div>
+<div class="hero-console">
+<div class="console-top">
+<span>
+<i>
+</i> RESONANCE / IMAGE EXPLORER</span>
+<span id="heroModeName">DIFFUSION MRI</span>
+</div>
+<div class="hero-visual">
+<canvas id="heroCanvas" role="img" aria-label="Illustrative breast MRI illustration">
+</canvas>
+<canvas id="heroTransition" aria-hidden="true"></canvas>
+</div>
+<div class="mode-tabs" aria-label="Breast MRI sequence">
+<button data-hero="dwi" class="active" aria-pressed="true">Diffusion</button>
+<button data-hero="t1" aria-pressed="false">T1</button>
+<button data-hero="t2" aria-pressed="false">T2</button>
+<button data-hero="dce" aria-pressed="false">DCE</button>
+<button data-hero="adc" aria-pressed="false">ADC</button>
+</div>
+<div class="hero-slideshow-controls"><span id="heroSlideshowStatus">Automatic sequence preview</span><button id="heroSlideshow" type="button" class="quiet-button">Pause slideshow Ⅱ</button></div>
+<div class="hero-phase">
+<label for="heroPhase">Selected DCE phase <span id="heroPhaseName">Post 3</span>
+</label>
+<input id="heroPhase" type="range" min="0" max="3" value="3" aria-label="Selected dynamic contrast phase">
+</div>
+
+</div>
+</div>
+</section>
+<div class="institution-strip">
+<div class="wrap institutions">
+<span>RESEARCH & COLLABORATION</span>
+<b>Oslo University Hospital</b>
+<b>Østfold Hospital</b>
+<b>Amsterdam UMC</b>
+</div>
+</div>
+<section class="section focus-tiles">
+<div class="wrap">
+<div class="section-heading">
+<div>
+<div class="eyebrow">FROM BREAST MRI TO RADIOLOGY REVIEW</div>
+<h2 class="section-title"><span class="heading-phrase heading-tone-1">One scan.</span> <span class="heading-phrase heading-tone-2">Four AI perspectives.</span></h2>
+</div>
+<p>Prepare images, segment lesions, review kinetics and generate a structured report.</p>
+</div>
+<div class="focus-grid">
+<a class="focus-card focus-dwi" href="#workflow">
+<div class="focus-thumb focus-thumb-pair">
+<figure>
+<img src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="n4-before" alt="Illustrative breast MRI with simulated bias-field shading">
+<figcaption>BEFORE</figcaption>
+</figure>
+<figure>
+<img src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="n4-after" alt="Illustrative breast MRI after simulated bias-field correction">
+<figcaption>AFTER</figcaption>
+</figure>
+</div>
+<small>01 · PREPARE</small>
+<strong>Preprocessing</strong>
+<span>Bias correction and motion alignment.</span>
+<b>Explore preprocessing ↗</b>
+</a>
+<a class="focus-card focus-t1" href="#explore">
+<div class="focus-thumb">
+<img src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="result-1" alt="Illustrative lesion views in axial, coronal and sagittal planes">
+<span>DCE EXAMPLE · THREE PLANES</span>
+</div>
+<small>02 · LOCALIZE</small>
+<strong>Multimodal segmentation</strong>
+<span>Research linking diffusion and structural MRI.</span>
+<b>Open lesion viewer ↗</b>
+</a>
+<a class="focus-card focus-t2" href="#kinetics">
+<div class="focus-thumb focus-thumb-chart">
+<svg viewBox="0 0 220 110" role="img" aria-label="Illustrative lesion enhancement across four illustrative DCE phases">
+<path d="M18 91H204M18 16V91" fill="none" stroke="#91a8d5" stroke-width="1"/>
+<path d="M24 86 L82 51 L140 32 L198 20" fill="none" stroke="#91ead6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<g fill="#f2ce84" stroke="#18213f" stroke-width="2">
+<circle cx="24" cy="86" r="6"/><circle cx="82" cy="51" r="6"/><circle cx="140" cy="32" r="6"/><circle cx="198" cy="20" r="6"/>
+</g>
+<text x="18" y="107">PRE</text>
+<text x="145" y="107">POST 3</text>
+</svg>
+<span>ILLUSTRATIVE CURVE · TYPE I</span>
+</div>
+<small>03 · CHARACTERIZE</small>
+<strong>Classification</strong>
+<span>Kinetic patterns and an example BI-RADS assessment.</span>
+<b>Explore kinetics ↗</b>
+</a>
+<a class="focus-card focus-dce" href="#report">
+<div class="focus-thumb focus-thumb-report">
+<div class="report-mini">
+<img src="assets/mark.svg?v=paired-edition-20261027-1" alt="">
+<strong>RESONANCE</strong>
+<span>STRUCTURED MRI REPORT</span>
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+<div>
+<b>FINDING</b>
+<b>LOCATION</b>
+<b>BI-RADS</b>
+</div>
+</div>
+<span>LESION SUMMARY PREVIEW</span>
+</div>
+<small>04 · REPORT</small>
+<strong>Report generation</strong>
+<span>Structured findings for radiology review.</span>
+<b>View structured report ↗</b>
+</a>
+</div>
+</div>
+</section>
+<section class="workflow-section" id="workflow">
+<div class="wrap section-heading">
+<div>
+<div class="eyebrow light">MRI / PREPROCESSING</div>
+<h2 class="section-title"><span class="heading-phrase heading-tone-1">Workflow for Breast MRI</span> <span class="heading-phrase heading-tone-2">Preprocessing</span></h2>
+<p>The eight-stage slideshow advances every second. Pause it or choose a stage.</p>
+</div>
+</div>
+<div class="pipeline-scroll" id="pipelineScroll">
+<div class="workflow-sticky wrap">
+<div class="pipeline-panel">
+<div class="panel-top">
+<span>
+<i>
+</i> PREPROCESSING / BREAST MRI</span>
+<span class="mode-label">DCE PREPROCESSING</span>
+<button id="pipelinePlay" class="quiet-button" aria-label="Play pipeline">Play flow ▷</button>
+</div>
+<div class="stage-path" aria-label="Preprocessing stages">
+<button data-step="0" class="active" aria-current="step">
+<small>01</small>
+<img src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="n4-after" alt="" loading="eager">
+<span>N4 correction</span>
+</button>
+<button data-step="1">
+<small>02</small>
+<img src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="roi-after" alt="" loading="eager">
+<span>Breast ROI</span>
+</button>
+<button data-step="2">
+<small>03</small>
+<img src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="coreg-roi-reference" alt="" loading="eager">
+<span>Co-registration</span>
+</button>
+<button data-step="3">
+<small>04</small>
+<img src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="grid-after" alt="" loading="eager">
+<span>Resampling</span>
+</button>
+<button data-step="4">
+<small>05</small>
+<img src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="phase-stack" alt="" loading="eager">
+<span>4D DCE stack</span>
+</button>
+<button data-step="5">
+<small>06</small>
+<img src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="norm-after" alt="" loading="eager">
+<span>Normalization</span>
+</button>
+<button data-step="6">
+<small>07</small>
+<img src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="vessel-after" alt="" loading="eager">
+<span>Vessel suppression</span>
+</button>
+<button data-step="7">
+<small>08</small>
+<img src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="sub-3" alt="" loading="eager">
+<span>Subtraction</span>
+</button>
+</div>
+<div class="pipeline-canvas-row" id="pipelineCanvasRow">
+<div class="pipeline-pane">
+<span id="pipelineBeforeLabel">UNEVEN SIGNAL · SAME WINDOW</span>
+<div class="pipeline-image-wrap">
+<img id="pipelineBefore" src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="n4-before" alt="Illustrative breast MRI with simulated bias-field shading">
+</div>
+</div>
+<span class="process-arrow" aria-hidden="true">→</span>
+<div class="pipeline-pane">
+<span id="pipelineAfterLabel">CORRECTED · SAME WINDOW</span>
+<div class="pipeline-image-wrap">
+<img id="pipelineAfter" src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="n4-after" alt="Illustrative breast MRI after reversing the known simulated bias field">
+</div>
+</div>
+</div>
+<div class="pipeline-caption">
+<div>
+<h3 id="stepTitle" aria-live="polite">Correct uneven signal.</h3>
+<p id="stepDescription">Correct smooth intensity shading across the DCE phases.
+Compare images using the same display window.</p>
+</div>
+<div class="step-controls">
+<button id="prevStep" aria-label="Previous stage" disabled>←</button>
+<button id="nextStep" aria-label="Next stage">→</button>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+<section class="section diffusion-section" id="diffusion">
+<div class="wrap section-heading"><div>
+<div class="eyebrow">DIFFUSION MRI</div>
+<h2 class="section-title"><span class="heading-phrase heading-tone-1">Diffusion MRI.</span> <span class="heading-phrase heading-tone-2">Explore denoising.</span></h2>
+</div></div>
+<div class="wrap diffusion-grid">
+<div>
+<p>Compare noisy illustrative diffusion MRI with a fixed bilateral-filtered preview.</p>
+<label for="denoiseSlider" class="control-label">Filtered-image blend <span id="denoiseName">45% filtered preview</span>
+</label>
+<input id="denoiseSlider" type="range" min="0" max="100" value="45">
+</div>
+<div class="diffusion-images">
+<figure>
+<canvas id="dwiBefore" role="img" aria-label="Illustrative diffusion MRI illustration">
+</canvas>
+<figcaption>Noisy diffusion image</figcaption>
+</figure>
+<figure>
+<canvas id="dwiAfter" role="img" aria-label="Diffusion MRI with adjustable noise reduction">
+</canvas>
+<figcaption>Bilateral-filtered preview</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section class="section segmentation-section" id="explore">
+<div class="wrap">
+<div class="section-heading">
+<div>
+<div class="eyebrow light">BREAST & LESION SEGMENTATION</div>
+<h2 class="section-title"><span class="heading-phrase heading-tone-1">Lesion localization.</span> <span class="heading-phrase heading-tone-2">See through the breast.</span></h2>
+<p>Explore three illustrated lesions and compare their contours with the MRI.</p>
+</div>
+</div>
+<div class="reader">
+<div class="panel-top">
+<span>
+<i>
+</i> LESION LOCALIZATION / BREAST MRI</span>
+<div class="view-tabs" aria-label="Image presentation">
+<button data-presentation="overview" class="active" aria-pressed="true">Overview</button>
+<button data-presentation="detail" aria-pressed="false">Lesion detail</button>
+<button data-presentation="contours" aria-pressed="false">Contours</button>
+</div>
+<button class="quiet-button" id="resetViewer">Reset ↺</button>
+</div>
+<div class="reader-grid">
+<div class="slice-column">
+<div class="slice-compare">
+<canvas id="mriBase" role="img" aria-label="Breast MRI without segmentation overlay">
+</canvas>
+<div class="mask-reveal" id="maskReveal">
+<canvas id="mriMask" role="img" aria-label="Breast and lesion segmentation overlay">
+</canvas>
+</div>
+<span class="image-tag left-tag">MRI</span>
+<span class="image-tag right-tag">LESIONS</span>
+<div class="reveal-line" id="revealLine">
+<span>↔</span>
+</div>
+<input id="maskSlider" type="range" min="0" max="100" value="52" aria-label="Reveal breast and lesion segmentation">
+</div>
+<div class="slice-control">
+<label for="sliceSlider">Contour opacity <span id="sliceName">42%</span>
+</label>
+<input id="sliceSlider" type="range" min="5" max="80" value="42">
+</div>
+</div>
+<div class="volume-column">
+<span class="volume-tag">ILLUSTRATED 3D CONTEXT</span>
+<canvas id="volumeCanvas" role="img" aria-label="Rotatable illustrated breast context with all three lesions">
+</canvas>
+<div class="rotation-control">
+<label for="rotationSlider">Rotate the illustrated context <span>Drag to explore</span>
+</label>
+<input id="rotationSlider" type="range" min="-100" max="100" value="20">
+</div>
+</div>
+</div>
+<div class="reader-bottom">
+<div class="all-lesions-key" aria-label="Focus on an illustrated lesion"><button type="button" data-focus-lesion="1"><i></i>Lesion 01</button><button type="button" data-focus-lesion="2"><i></i>Lesion 02</button><button type="button" data-focus-lesion="3"><i></i>Lesion 03</button></div>
+<label class="mask-toggle">
+<input id="breastMaskToggle" type="checkbox">
+<span>Show breast outline</span>
+</label>
+<a href="#kinetics">Explore lesion kinetics ↓</a>
+</div>
+</div>
+</div>
+</section>
+<section class="section case-results" id="results">
+<div class="wrap">
+<div class="section-heading">
+<div>
+<div class="eyebrow">MRI LESION VIEW</div>
+<h2 class="section-title"><span class="heading-phrase heading-tone-1">From a finding</span> <span class="heading-phrase heading-tone-2">to its full extent.</span></h2>
+</div>
+<div>
+<p>Lesion views in axial, coronal and sagittal planes.</p>
+<label for="resultSelect">Explore a lesion</label>
+<select id="resultSelect">
+<option value="1">Region 01</option>
+<option value="2">Region 02</option>
+<option value="3">Region 03</option>
+</select>
+</div>
+</div>
+<img id="caseResult" src="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%221%22%20height=%221%22%3E%3Cpath%20fill=%22%23060e14%22%20d=%22M0%200h1v1H0z%22/%3E%3C/svg%3E" data-illustration="result-1" alt="Illustrative breast MRI examples with lesion overlays in axial, coronal and sagittal views">
+<p class="section-note">MRI examples with illustrative lesion overlays.</p>
+</div>
+</section>
+<section class="section kinetics-section" id="kinetics">
+<div class="wrap">
+<div class="section-heading">
+<div>
+<div class="eyebrow">MRI / KINETIC PATTERNS</div>
+<h2 class="section-title"><span class="heading-phrase heading-tone-1">Move the region.</span> <span class="heading-phrase heading-tone-2">Follow the curve.</span></h2>
+</div>
+<p>Explore three lesions across DCE, ADC, DWI and T2,<br class="desktop-line">then move the ring to follow DCE enhancement.</p>
+</div>
+<div class="kinetic-grid">
+<div class="roi-view">
+<div class="kinetic-sequence-tabs" role="group" aria-label="Breast MRI sequence">
+<button type="button" data-kinetic-mode="dce" class="active" aria-pressed="true">DCE</button>
+<button type="button" data-kinetic-mode="adc" aria-pressed="false">ADC</button>
+<button type="button" data-kinetic-mode="dwi" aria-pressed="false">DWI</button>
+<button type="button" data-kinetic-mode="t2" aria-pressed="false">T2</button>
+</div>
+<div class="kinetic-case-label" id="kineticImageLabel">LESION 01 · DCE</div>
+
+<canvas id="kineticMRI" role="img" aria-label="Drag a sampling region over the breast MRI to explore enhancement curves">
+</canvas>
+<div class="roi-instruction">Choose a lesion or drag the ring to sample DCE.<div class="kinetic-region-buttons"><button type="button" data-kinetic-roi="1">Lesion 01</button><button type="button" data-kinetic-roi="2">Lesion 02</button><button type="button" data-kinetic-roi="3">Lesion 03</button></div></div>
+<div class="kinetic-phases">
+<label for="kineticPhase">DCE phase <span id="kineticPhaseName">Post 3</span>
+</label>
+<input id="kineticPhase" type="range" min="0" max="3" value="3">
+</div>
+
+</div>
+<div class="curve-panel">
+<div class="pattern-heading">
+<span class="eyebrow" id="curveSource">DCE ROI SAMPLE</span>
+<h3 id="curveTitle" aria-live="polite">Type III · Washout</h3>
+</div>
+<div class="example-birads" aria-live="polite">
+<span>EXAMPLE BI-RADS CLASSIFICATION</span>
+<strong id="exampleBirads">BI-RADS 4 · Suspicious</strong>
+</div>
+<svg id="kineticChart" viewBox="0 0 600 320" role="img" aria-label="Dynamic enhancement curve">
+<g id="curveGrid">
+</g>
+<path id="curveArea">
+</path>
+<path id="curveLine">
+</path>
+<g id="curveDots">
+</g>
+<text x="65" y="24" class="axis-label">Enhancement (%)</text>
+
+</svg>
+<div class="curve-types" aria-label="Enhancement curve examples">
+<button data-curve="1">
+<i>
+</i>Type I <span>Persistent</span>
+</button>
+<button data-curve="2">
+<i>
+</i>Type II <span>Plateau</span>
+</button>
+<button data-curve="3" class="active">
+<i>
+</i>Type III <span>Washout</span>
+</button>
+</div>
+<p id="curveExplanation">A rapid rise followed by a fall in enhancement.</p>
+<div class="birads-note">
+<b>BI-RADS is an assessment, not a segmentation label.</b>
+<span>Morphology and clinical context matter alongside kinetics. Curve type alone does not assign a category.</span>
+</div>
+</div>
+</div>
+<p class="section-note">Compare DCE enhancement with corresponding regions on DWI, T2 and ADC.</p>
+</div>
+</section>
+<section class="section report-section" id="report">
+<div class="wrap">
+<div class="section-heading">
+<div>
+<div class="eyebrow">STRUCTURED REPORTING</div>
+<h2 class="section-title"><span class="heading-phrase heading-tone-1">The finding.</span> <span class="heading-phrase heading-tone-2">The views.</span> <span class="heading-phrase heading-tone-3">The context.</span></h2>
+</div>
+<div class="report-actions">
+<label for="reportLesion">Report lesion</label>
+<select id="reportLesion">
+<option value="1">Lesion 01</option>
+<option value="2">Lesion 02</option>
+<option value="3">Lesion 03</option>
+</select>
+<button id="printReport" class="button dark">Print / save PDF ↗</button>
+</div>
+</div>
+<article class="report-paper" id="reportPaper">
+<div class="report-brand">
+<img src="assets/resonance-symbol.svg?v=paired-edition-20261027-1" alt="RESONANCE logo">
+<span>RESONANCE<small>BREAST MRI / LESION SUMMARY</small>
+</span>
+<b>MRI EXAMPLE</b>
+</div>
+<div class="report-title">
+<h3 id="reportTitle">Lesion 01 · Breast MRI</h3>
+<span id="reportPattern">Type III · Washout</span>
+</div>
+<div class="report-metrics">
+<div>
+<span>EXAMPLE VOLUME</span>
+<strong id="reportVolume">—</strong>
+</div>
+<div>
+<span>EXAMPLE EXTENT · R-L × A-P × S-I</span>
+<strong id="reportSize">—</strong>
+</div>
+<div>
+<span>BI-RADS · EXAMPLE ASSESSMENT</span>
+<strong id="biradsValue">BI-RADS 4 · Suspicious</strong>
+</div>
+</div>
+<div class="report-image-grid">
+<figure>
+<figcaption>AXIAL OVERVIEW</figcaption>
+<canvas id="reportAxial" role="img" aria-label="Axial view of selected lesion">
+</canvas>
+</figure>
+<figure>
+<figcaption>LESION DETAIL</figcaption>
+<canvas id="reportCoronal" role="img" aria-label="Axial close-up of the selected illustrated lesion">
+</canvas>
+</figure>
+<figure>
+<figcaption>CONTOUR DETAIL</figcaption>
+<canvas id="reportSagittal" role="img" aria-label="Contour close-up of the selected illustrated lesion">
+</canvas>
+</figure>
+</div>
+<div class="report-bottom-grid">
+<div>
+<h4>ESTIMATED LOCATION</h4>
+<div class="location-diagram" id="locationDiagram">
+<span class="clock n12">12</span>
+<span class="clock n3">3</span>
+<span class="clock n6">6</span>
+<span class="clock n9">9</span>
+<i id="locationDot">
+</i>
+</div>
+<p id="locationText">Selected candidate region</p>
+</div>
+<div>
+<h4>ENHANCEMENT OVER TIME</h4>
+<svg id="reportCurve" viewBox="0 0 500 235" role="img" aria-label="Enhancement curve for the selected lesion">
+</svg>
+</div>
+</div>
+<div class="birads-report">
+<h4>BI-RADS · EXAMPLE ASSESSMENT</h4>
+<p>Choose an example assessment for the structured report.</p>
+<label for="biradsSelect">Report demonstration</label>
+<select id="biradsSelect">
+<option value="">Choose an assessment</option>
+<option value="0 · Incomplete">0 · Incomplete</option>
+<option value="1 · Negative">1 · Negative</option>
+<option value="2 · Benign">2 · Benign</option>
+<option value="3 · Probably benign">3 · Probably benign</option>
+<option value="4 · Suspicious" selected>4 · Suspicious</option>
+<option value="5 · Highly suggestive of malignancy">5 · Highly suggestive of malignancy</option>
+<option value="6 · Known biopsy-proven malignancy">6 · Known biopsy-proven malignancy</option>
+</select>
+<p id="biradsRecommendation"></p>
+<a href="https://accreditationsupport.acr.org/support/solutions/articles/11000045774-reporting-breast-mri" target="_blank" rel="noopener">ACR breast MRI reporting guidance ↗</a>
+</div>
+<div class="report-foot">
+<span>RESONANCE</span>
+<span>Illustrated finding · example measurements and BI-RADS assessment</span>
+</div>
+</article>
+</div>
+</section>
+<section class="section team-section" id="team">
+<div class="wrap">
+<h2 class="section-title"><span class="heading-phrase heading-tone-1">People behind the</span> <span class="heading-phrase heading-tone-2">RESONANCE project.</span></h2>
+<div class="team-grid">
+<article>
+<img src="assets/team-oliver.webp" alt="Oliver Marcel Geier" loading="eager">
+<div>
+<span>PRINCIPAL INVESTIGATOR</span>
+<h3>Oliver Marcel Geier</h3>
+<p>MR Physicist, PhD<br>Oslo University Hospital</p>
+<a href="https://www.ous-research.no/no/bjornerud/Group+members/7144" target="_blank" rel="noopener">Profile ↗</a>
+</div>
+</article>
+<article>
+<img src="assets/team-matthan.webp" alt="Matthan Caan" loading="eager">
+<div>
+<span>CO-PRINCIPAL INVESTIGATOR</span>
+<h3>Matthan Caan</h3>
+<p>Assistant Professor, PhD<br>Amsterdam UMC</p>
+<a href="https://www.amsterdamumc.org/en/research/researchers/matthan-caan-1" target="_blank" rel="noopener">Profile ↗</a>
+</div>
+</article>
+<article>
+<img src="assets/team-neel.webp" alt="Neel Kanwal" loading="eager">
+<div>
+<span>AI RESEARCHER</span>
+<h3>Neel Kanwal</h3>
+<p>Postdoctoral researcher, PhD<br>RESONANCE</p>
+<a href="https://www.linkedin.com/in/neel-kanwal/" target="_blank" rel="noopener">Profile ↗</a>
+</div>
+</article>
+</div>
+</div>
+</section>
+<section class="closing">
+<div class="wrap closing-grid">
+<h2 class="section-title"><span class="heading-phrase heading-tone-1">The next questions</span> <span class="heading-phrase heading-tone-2">need curious people.</span></h2>
+<div>
+<p>Interested in breast MRI and AI?</p>
+<a href="careers.html" class="button gradient">Explore careers <span>↗</span>
+</a>
+<a href="https://www.linkedin.com/in/neel-kanwal/" class="text-link" target="_blank" rel="noopener">Connect with Resonance Team ↗</a>
+</div>
+</div>
+</section>
+</main>
+<footer>
+<div class="wrap footer-row">
+<a class="brand" href="#top">
+<img src="assets/resonance-symbol.svg?v=paired-edition-20261027-1" alt="">
+<span>RESONANCE</span>
+</a>
+<span>MRI research demonstration</span>
+<a href="careers.html">Careers</a>
+<a href="https://www.linkedin.com/in/neel-kanwal/" target="_blank" rel="noopener">Contact ↗</a>
+</div>
+</footer>
+<script src="assets/reference/illustrations.js?v=paired-edition-20261027-1"></script>
+<script src="demo-assets.js?v=paired-edition-20261027-1">
+</script>
+<script src="kinetic-assets.js?v=paired-edition-20261027-1"></script>
+<script src="mri-demo.js?v=paired-edition-20261027-1">
+</script>
+<script src="app.js?v=paired-edition-20261027-1">
+</script>
+</body>
+</html>

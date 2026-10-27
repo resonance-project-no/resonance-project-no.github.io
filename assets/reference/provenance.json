@@ -1,0 +1,18 @@
+{
+  "provenance": "User-confirmed cleared synthetic reference with AI-edited lesions; modelled DCE signals, artist contours and illustrative 3D context.",
+  "sourceImageUnchangedOnDisk": true,
+  "model": "Pixel intensity follows the modelled core curve with a 12-pixel Gaussian outside-contour enhancement halo; core masks and curves remain unchanged.",
+  "fictionalTimesSeconds": [
+    0,
+    65,
+    155,
+    305
+  ],
+  "assumedContextDepthMm": 160.0,
+  "hasAcquired3DData": false,
+  "reportMeasurements": "Illustrative geometry from an assumed illustrative loft, not measured clinical imaging.",
+  "contours": "Artist-defined illustrative shapes, not model predictions.",
+  "modalityRelationships": "AI-generated illustrative appearances, not validated quantitative diffusion or relaxometry.",
+  "geometryContext": "Artist-defined synthetic breast and lesion outlines with assumed loft depth; one connected breast shell and three closed solid lesion surfaces.",
+  "cardiacEnhancement": "Separate illustrative blood-pool and myocardial phase profiles. Qualitative, not measured cardiac physiology; excluded from all breast and lesion masks."
+}
