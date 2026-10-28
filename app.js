@@ -1,5 +1,5 @@
 /* USER SETTINGS: demo defaults, pipeline timing, colours and report display. */
-const SETTINGS={heroMode:'dwi',heroSequenceInterval:1500,heroTransitionMs:300,sequenceBreastCropBottom:.62,denoise:.45,bValue:800,rotation:20,elevation:23,flowInterval:1000,defaultReveal:52,overlayOpacity:.42,exampleBirads:'4 · Suspicious',reportLocationOverrides:{1:"4 o'clock",2:"10 o'clock",3:"11 o'clock"}};
+const SETTINGS={heroMode:'dwi',heroSequenceInterval:1500,heroTransitionMs:300,sequenceBreastCropBottom:.62,denoise:.45,bValue:800,rotation:20,elevation:23,flowInterval:1000,defaultReveal:52,overlayOpacity:.42,exampleBirads:'4 · Suspicious',kineticBiradsByLesion:{1:'4 · Suspicious',2:'3 · Probably benign',3:'1 · Negative'},reportLocationOverrides:{1:'Central',2:"10 o'clock",3:"11 o'clock"}};
 const $=id=>document.getElementById(id);
 const Demo=window.BreastDemo;
 const DATA=Demo.getDataInfo();
@@ -62,7 +62,7 @@ function kineticDraw(){
  document.querySelectorAll('[data-kinetic-phase]').forEach(button=>{let on=Number(button.dataset.kineticPhase)===kineticPhase;button.classList.toggle('active',on);button.setAttribute('aria-pressed',String(on));});$('kineticPhase').closest('.kinetic-phases').hidden=kineticMode!=='dce';$('kineticPhaseName').textContent=['Phase 0 · Pre-contrast','Post 1 · Early','Post 2','Post 3 · Delayed'][kineticPhase];
  $('curveSource').textContent=c.source==='image-sample'?'DCE ROI SAMPLE':'REFERENCE PATTERN';
  $('curveTitle').textContent=!c.valid?'Choose breast tissue':c.type?'Type '+c.type+' · '+c.typeLabel:'Low initial enhancement';
- $('exampleBirads').textContent=$('biradsSelect').value?'BI-RADS '+$('biradsSelect').value:'Not assigned';
+ let exampleAssessment=SETTINGS.kineticBiradsByLesion[KINETIC_REGIONS[kineticRegion].id];$('exampleBirads').textContent=exampleAssessment?'BI-RADS '+exampleAssessment:'Not assigned';
  $('curveExplanation').textContent=c.source==='reference'?'Illustrative reference pattern.':!c.valid?c.reason:'Median DCE signal within the ring across four phases.';
  let color=c.type==='I'?'#2a9f91':c.type==='II'?'#a78032':c.type==='III'?'#c86e88':'#68878f',curve=pathFor(c.values,600,320,65,c.source==='reference'?null:KINETIC_DATA.kineticsTimesSeconds);
  curve.axisLabel=c.source==='reference'?'Reference phases':'DCE phase';drawCurveAxes($('curveGrid'),curve);$('curveLine').setAttribute('d',c.valid?curve.path:'');$('curveLine').style.stroke=color;
@@ -76,7 +76,7 @@ function reportDraw(){
  $('reportVolume').textContent=l.volumeMl.toFixed(l.volumeMl<1?2:1)+' mL';$('reportSize').textContent=l.extentMm.map(mm=>mm.toFixed(1)).join(' × ')+' mm';
  ['reportAxial','reportCoronal','reportSagittal'].forEach((id,i)=>Demo.draw($(id),{view:'axial',slice:DATA.depth===1?.5:l.center[2],mode:'dce',phase:3,mask:i===1?'none':'lesion',region:l.id,selected:l.id,opacity:.38,zoom:i===0?1:3.4,center:i===0?[.5,.5]:[l.u,l.v],dimBase:i===2?.55:1}));
  let curve=pathFor(l.curve,500,235,52),svg=$('reportCurve');svg.replaceChildren();let axes=svgNode('g',{});svg.append(axes);drawCurveAxes(axes,curve);svg.append(svgNode('path',{d:curve.path,fill:'none',stroke:'#16879d','stroke-width':3}));curve.pts.forEach(([x,y])=>svg.append(svgNode('circle',{cx:x,cy:y,r:4,fill:'#16879d'})));
- let location=SETTINGS.reportLocationOverrides[l.id]||l.location;let hour=parseInt(location,10),angle=((Number.isFinite(hour)?hour:12)/12*Math.PI*2)-Math.PI/2;$('locationDot').style.left=(50+Math.cos(angle)*31)+'%';$('locationDot').style.top=(50+Math.sin(angle)*31)+'%';$('locationText').textContent='Estimated · '+l.patientSide+' breast · '+(location||'location unavailable');
+ let location=SETTINGS.reportLocationOverrides[l.id]||l.location,isCentral=location==='Central';let hour=parseInt(location,10),angle=((Number.isFinite(hour)?hour:12)/12*Math.PI*2)-Math.PI/2;$('locationDot').style.left=(isCentral?50:50+Math.cos(angle)*31)+'%';$('locationDot').style.top=(isCentral?50:50+Math.sin(angle)*31)+'%';$('locationDot').style.transform=isCentral?'translate(-50%,-50%)':'';$('locationText').textContent='Estimated · '+(isCentral?'Central':l.patientSide+' breast · '+(location||'location unavailable'));
 }
 $('reportLesion').addEventListener('change',e=>{reportSelected=Number(e.target.value);viewer.selected=reportSelected;selectLesion(reportSelected)});$('printReport').addEventListener('click',()=>window.print());
 let menu=document.querySelector('.menu-toggle'),nav=$('navigation');menu.addEventListener('click',()=>{let open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation');menu.textContent=open?'×':'☰'});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.textContent='☰'}));
@@ -87,7 +87,7 @@ heroDraw=function(){let canvas=$('heroCanvas'),overlay=$('heroTransition');let c
 pipelineDraw=function(){let s=STEPS[stage];let before=$('pipelineBefore'),after=$('pipelineAfter');let beforeImage=reducedMotion&&stage===2?s.beforeImage.replace('.gif','-still.webp'):s.beforeImage;ReferenceIllustrations.apply(before,beforeImage);ReferenceIllustrations.apply(after,s.afterImage);before.alt=s.beforeAlt;after.alt=s.afterAlt;$('pipelineBeforeLabel').textContent=s.before;$('pipelineAfterLabel').textContent=s.after;$('pipelineCanvasRow').dataset.stage=String(stage);};
 diffusionDraw=function(){caseDraw($('dwiBefore'),'dwi');caseDraw($('dwiAfter'),'dwi',{name:'dwi-smooth',alpha:denoise});$('denoiseName').textContent=Math.round(denoise*100)+'% filtered preview'};
 $('resultSelect').addEventListener('change',e=>ReferenceIllustrations.apply($('caseResult'),'result-'+e.target.value));
-function updateExampleAssessment(){let value=$('biradsSelect').value,text=value?'BI-RADS '+value:'Not assigned';$('biradsValue').textContent=text;$('exampleBirads').textContent=text;$('biradsRecommendation').textContent=value?'Example report assessment.':'Choose an example assessment.';}
+function updateExampleAssessment(){let value=$('biradsSelect').value,text=value?'BI-RADS '+value:'Not assigned';$('biradsValue').textContent=text;$('biradsRecommendation').textContent=value?'Example report assessment.':'Choose an example assessment.';}
 $('biradsSelect').value=SETTINGS.exampleBirads;
 $('biradsSelect').addEventListener('change',updateExampleAssessment);
 updateExampleAssessment();
