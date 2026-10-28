@@ -16,5 +16,11 @@
     "restrictedScansUsedForGeneration": false,
     "validatedRegistration": false,
     "quantitativeMRI": false
+  },
+  "breastROIUpdate": {
+    "source": "Cleared synthetic reference only",
+    "posteriorCoverage": "Wider chest-wall and lateral processing ROI",
+    "outerBoundary": "Constrained to the synthetic tissue envelope; no patient-derived masks",
+    "date": "2026-10-28"
   }
 }
