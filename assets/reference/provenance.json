@@ -14,5 +14,11 @@
   "contours": "Artist-defined illustrative shapes, not model predictions.",
   "modalityRelationships": "AI-generated illustrative appearances, not validated quantitative diffusion or relaxometry.",
   "geometryContext": "Artist-defined synthetic breast and lesion outlines with assumed loft depth; one connected breast shell and three closed solid lesion surfaces.",
-  "cardiacEnhancement": "Separate illustrative blood-pool and myocardial phase profiles. Qualitative, not measured cardiac physiology; excluded from all breast and lesion masks."
+  "cardiacEnhancement": "Separate illustrative blood-pool and myocardial phase profiles. Qualitative, not measured cardiac physiology; excluded from all breast and lesion masks.",
+  "breastROIUpdate": {
+    "source": "Cleared synthetic reference only",
+    "posteriorCoverage": "Wider chest-wall and lateral processing ROI",
+    "outerBoundary": "Constrained to the synthetic tissue envelope; no patient-derived masks",
+    "date": "2026-10-28"
+  }
 }
