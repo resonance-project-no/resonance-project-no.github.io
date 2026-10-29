@@ -22,5 +22,16 @@
     "posteriorCoverage": "Wider chest-wall and lateral processing ROI",
     "outerBoundary": "Constrained to the synthetic tissue envelope; no patient-derived masks",
     "date": "2026-10-28"
+  },
+  "lesion3DPlacement": {
+    "source": "Synthetic reference only; no patient geometry",
+    "depthCenters": [
+      0.57,
+      0.35,
+      0.69
+    ],
+    "depthIsAssumed": true,
+    "MRIOverlaysUnchanged": true,
+    "lesionShapesAndVolumesUnchanged": true
   }
 }
