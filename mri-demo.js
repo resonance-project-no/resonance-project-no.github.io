@@ -447,6 +447,12 @@
     var definitions=getLesions('axial',d.defaultSlice),metrics=definitions.map(function(l){return {id:l.id,volumeMl:l.volumeMl*Math.pow(contourScale,3),diameterMm:l.diameterMm*contourScale};});
     return {ready:true,lesions:lesionPositions,metrics:metrics,view:vi.view,slice:slice};
   }
+  // Return the saved lesion-mask label under a view coordinate, independently of curve type.
+  function getLesionAt(view,u,v,slice) {
+    var d=data();if(!d||!Number.isFinite(u)||!Number.isFinite(v)||u<0||u>1||v<0||v>1)return 0;
+    var vi=viewInfo(d,view||'axial'),p=planeTo3D(vi.view,u,v,slice==null?defaultSlice(vi.view):slice);
+    return maskAt(d,d.lesionMask,p[0]*(d.width-1),p[1]*(d.height-1),p[2]*(d.depth-1));
+  }
   function measureROI(view,u,v,slice,radius) {
     var d=data(),vi=viewInfo(d,view||'axial');if(!d.signalVolumes||d.signalVolumes.length!==4)return {valid:false,values:[0,0,0,0],reason:'Sampling data unavailable'};
     var rx=(radius||.055)*Math.min(1,1/vi.aspect),ry=(radius||.055)*Math.min(1,vi.aspect),signals=[[],[],[],[]];
@@ -475,7 +481,7 @@
       }
     }
     var api={};
-    Object.entries({draw:draw,measureROI:measureROI,eventToROI:eventToROI,getDataInfo:getDataInfo,getDefaultSlice:defaultSlice}).forEach(function(entry){api[entry[0]]=function(){return run(entry[1],arguments);};});
+    Object.entries({draw:draw,measureROI:measureROI,getLesionAt:getLesionAt,eventToROI:eventToROI,getDataInfo:getDataInfo,getDefaultSlice:defaultSlice}).forEach(function(entry){api[entry[0]]=function(){return run(entry[1],arguments);};});
     return api;
   }
   window.BreastDemo={createDatasetViewer:createDatasetViewer,draw:draw,drawVolume:drawVolume,getLesions:getLesions,getDefaultSlice:defaultSlice,eventToROI:eventToROI,measureROI:measureROI,getDataInfo:getDataInfo,settings:SETTINGS};
