@@ -1,6 +1,7 @@
 /* USER SETTINGS: demo defaults, pipeline timing, colours and report display. */
-const SETTINGS={heroMode:'dwi',heroSequenceInterval:1500,heroTransitionMs:300,sequenceBreastCropBottom:.62,denoise:.45,bValue:800,rotation:20,elevation:23,flowInterval:1000,defaultReveal:52,overlayOpacity:.42,exampleBirads:'5 · Highly suggestive of malignancy',kineticBiradsByLesion:{1:'5 · Highly suggestive of malignancy',2:'4 · Suspicious',3:'3 · Probably benign'},reportLocationOverrides:{1:'Central',2:"10 o'clock",3:"11 o'clock"}};
-const reportAssessments={...SETTINGS.kineticBiradsByLesion};
+const SETTINGS={heroMode:'dwi',heroSequenceInterval:1500,heroTransitionMs:300,sequenceBreastCropBottom:.62,denoise:.45,bValue:800,rotation:20,elevation:23,flowInterval:1000,defaultReveal:52,overlayOpacity:.42,exampleBirads:'5 · Highly suggestive of malignancy',kineticBiradsByLesion:{1:'5 · Highly suggestive of malignancy',2:'4 · Suspicious',3:'2/3 · Benign / probably benign'},reportLocationOverrides:{1:'Central',2:"10 o'clock",3:"11 o'clock"}};
+// The kinetic display groups 2/3 for the demonstration; report assessments remain single categories.
+const reportAssessments={...SETTINGS.kineticBiradsByLesion,3:'3 · Probably benign'};
 const $=id=>document.getElementById(id);
 const Demo=window.BreastDemo;
 const DATA=Demo.getDataInfo();
