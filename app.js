@@ -1,5 +1,6 @@
 /* USER SETTINGS: demo defaults, pipeline timing, colours and report display. */
-const SETTINGS={heroMode:'dwi',heroSequenceInterval:1500,heroTransitionMs:300,sequenceBreastCropBottom:.62,denoise:.45,bValue:800,rotation:20,elevation:23,flowInterval:1000,defaultReveal:52,overlayOpacity:.42,exampleBirads:'4 · Suspicious',kineticBiradsByLesion:{1:'4 · Suspicious',2:'3 · Probably benign',3:'1 · Negative'},reportLocationOverrides:{1:'Central',2:"10 o'clock",3:"11 o'clock"}};
+const SETTINGS={heroMode:'dwi',heroSequenceInterval:1500,heroTransitionMs:300,sequenceBreastCropBottom:.62,denoise:.45,bValue:800,rotation:20,elevation:23,flowInterval:1000,defaultReveal:52,overlayOpacity:.42,exampleBirads:'5 · Highly suggestive of malignancy',kineticBiradsByLesion:{1:'5 · Highly suggestive of malignancy',2:'4 · Suspicious',3:'3 · Probably benign'},reportLocationOverrides:{1:'Central',2:"10 o'clock",3:"11 o'clock"}};
+const reportAssessments={...SETTINGS.kineticBiradsByLesion};
 const $=id=>document.getElementById(id);
 const Demo=window.BreastDemo;
 const DATA=Demo.getDataInfo();
@@ -72,7 +73,7 @@ function kineticDraw(){
 }
 document.querySelectorAll('[data-curve]').forEach(b=>b.addEventListener('click',()=>{kineticReferenceType=['','I','II','III'][Number(b.dataset.curve)];kineticDraw()}));document.querySelectorAll('[data-kinetic-phase]').forEach(button=>button.addEventListener('click',()=>{kineticPhase=Number(button.dataset.kineticPhase);$('kineticPhase').value=kineticPhase;kineticDraw();}));$('kineticPhase').addEventListener('input',e=>{kineticPhase=Number(e.target.value);kineticDraw()});let roiDragging=false;function moveROI(e){let p=KineticDemo.eventToROI($('kineticMRI'),e);if(!p)return;roi={u:clamp(p.u,0,1),v:clamp(p.v,0,1),radius:roi.radius||KINETIC_RADIUS};kineticPreset=null;kineticReferenceType=null;kineticDraw()}$('kineticMRI').addEventListener('pointerdown',e=>{roiDragging=true;e.currentTarget.setPointerCapture(e.pointerId);moveROI(e)});$('kineticMRI').addEventListener('pointermove',e=>{if(roiDragging)moveROI(e)});$('kineticMRI').addEventListener('pointerup',()=>roiDragging=false);$('kineticMRI').addEventListener('pointercancel',()=>roiDragging=false);
 function reportDraw(){
- let l=LESIONS.find(x=>x.id===reportSelected)||LESIONS[0];$('reportTitle').textContent='Lesion '+String(l.id).padStart(2,'0')+' · '+l.patientSide+' breast';$('reportPattern').textContent='Type '+l.type+' · '+l.typeLabel;
+ let l=LESIONS.find(x=>x.id===reportSelected)||LESIONS[0];$('biradsSelect').value=reportAssessments[l.id]??SETTINGS.exampleBirads;updateExampleAssessment();$('reportTitle').textContent='Lesion '+String(l.id).padStart(2,'0')+' · '+l.patientSide+' breast';$('reportPattern').textContent='Type '+l.type+' · '+l.typeLabel;
  $('reportVolume').textContent=l.volumeMl.toFixed(l.volumeMl<1?2:1)+' mL';$('reportSize').textContent=l.extentMm.map(mm=>mm.toFixed(1)).join(' × ')+' mm';
  ['reportAxial','reportCoronal','reportSagittal'].forEach((id,i)=>Demo.draw($(id),{view:'axial',slice:DATA.depth===1?.5:l.center[2],mode:'dce',phase:3,mask:i===1?'none':'lesion',region:l.id,selected:l.id,opacity:.38,zoom:i===0?1:3.4,center:i===0?[.5,.5]:[l.u,l.v],dimBase:i===2?.55:1}));
  let curve=pathFor(l.curve,500,235,52),svg=$('reportCurve');svg.replaceChildren();let axes=svgNode('g',{});svg.append(axes);drawCurveAxes(axes,curve);svg.append(svgNode('path',{d:curve.path,fill:'none',stroke:'#16879d','stroke-width':3}));curve.pts.forEach(([x,y])=>svg.append(svgNode('circle',{cx:x,cy:y,r:4,fill:'#16879d'})));
@@ -87,7 +88,7 @@ heroDraw=function(){let canvas=$('heroCanvas'),overlay=$('heroTransition');let c
 pipelineDraw=function(){let s=STEPS[stage];let before=$('pipelineBefore'),after=$('pipelineAfter');let beforeImage=reducedMotion&&stage===2?s.beforeImage.replace('.gif','-still.webp'):s.beforeImage;ReferenceIllustrations.apply(before,beforeImage);ReferenceIllustrations.apply(after,s.afterImage);before.alt=s.beforeAlt;after.alt=s.afterAlt;$('pipelineBeforeLabel').textContent=s.before;$('pipelineAfterLabel').textContent=s.after;$('pipelineCanvasRow').dataset.stage=String(stage);};
 diffusionDraw=function(){caseDraw($('dwiBefore'),'dwi');caseDraw($('dwiAfter'),'dwi',{name:'dwi-smooth',alpha:denoise});$('denoiseName').textContent=Math.round(denoise*100)+'% filtered preview'};
 $('resultSelect').addEventListener('change',e=>ReferenceIllustrations.apply($('caseResult'),'result-'+e.target.value));
-function updateExampleAssessment(){let value=$('biradsSelect').value,text=value?'BI-RADS '+value:'Not assigned';$('biradsValue').textContent=text;$('biradsRecommendation').textContent=value?'Example report assessment.':'Choose an example assessment.';}
+function updateExampleAssessment(){let value=$('biradsSelect').value;reportAssessments[reportSelected]=value;let text=value?'BI-RADS '+value:'Not assigned';$('biradsValue').textContent=text;$('biradsRecommendation').textContent=value?'Example report assessment.':'Choose an example assessment.';}
 $('biradsSelect').value=SETTINGS.exampleBirads;
 $('biradsSelect').addEventListener('change',updateExampleAssessment);
 updateExampleAssessment();
