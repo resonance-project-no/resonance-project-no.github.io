@@ -841,3 +841,28 @@ to{opacity:1;transform:translateX(0)}
 .hero-visual{position:relative}.hero-visual>canvas{display:block;width:100%;height:100%;background:#030d17}.hero-visual>#heroTransition{position:absolute;inset:0;pointer-events:none;opacity:0}
 .hero-slideshow-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 15px 12px;color:#a9cbd3;font-size:12px}.hero-slideshow-controls button{font-size:12px;white-space:nowrap}.mode-tabs button{transition:background-color .25s,color .25s,border-color .25s}
 @media(max-width:380px){.hero-slideshow-controls{gap:6px;padding-inline:10px;font-size:11px}.hero-slideshow-controls button{font-size:11px}}
+
+/* Multiparametric reporting: shared lesion, four matched MRI views. */
+.report-intro{font-size:clamp(18px,1.5vw,22px);line-height:1.5;color:#536b75;max-width:760px;margin-top:18px}
+.report-comparison{margin-top:28px;break-inside:avoid}
+.report-comparison-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.report-comparison-heading h4,.report-context h4{font-size:21px;line-height:1.3;color:#174d59;margin:0 0 8px}
+.report-comparison-heading p{font-size:16px;line-height:1.5;color:#58717b;margin:0}
+.report-comparison-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.report-view-tabs{display:flex;gap:4px;padding:4px;background:#eaf2ef;border-radius:8px}
+.report-view-tabs button{padding:9px 12px;border:1px solid transparent;border-radius:6px;font-size:15px;line-height:1.3;color:#315e68;background:transparent;cursor:pointer}
+.report-view-tabs button.active{color:#fff;background:#176c70;border-color:#176c70}
+.report-view-tabs button:focus-visible{outline:2px solid #176c70;outline-offset:2px}
+.report-contour-toggle{display:flex;align-items:center;gap:8px;font-size:15px;color:#315e68;cursor:pointer}
+.report-contour-toggle input{width:18px;height:18px;accent-color:#176c70}
+.report-multiparametric-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+.report-multiparametric-grid figure{margin:0;min-width:0;overflow:hidden;border:1px solid #d9e5e1;border-radius:10px;background:#f2f6f3}
+.report-multiparametric-grid figcaption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;text-align:left;min-height:58px}
+.report-multiparametric-grid figcaption strong{font-size:20px;color:#164652}
+.report-multiparametric-grid figcaption span{font-size:14px;line-height:1.35;color:#5b737a;text-align:right;max-width:155px}
+.report-multiparametric-grid canvas{display:block;width:100%;height:260px;border-radius:0;background:#060e14}
+.report-context{padding:20px 22px;margin-top:18px;background:#edf5f1;border-left:4px solid #228a85;border-radius:4px}
+.report-context p{font-size:17px;line-height:1.6;color:#244f5b;margin:0}
+.report-context .report-contour-note{font-size:14px;line-height:1.5;color:#5a727b;margin-top:8px}
+@media(max-width:650px){.report-multiparametric-grid{grid-template-columns:minmax(0,1fr);gap:12px}.report-multiparametric-grid canvas{height:245px}.report-comparison-heading h4,.report-context h4{font-size:20px}.report-context{padding:17px}.report-context p{font-size:16px}.report-view-tabs button{font-size:14px}}
+@media print{.report-comparison-controls{display:none!important}.report-comparison{break-inside:avoid}.report-multiparametric-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.report-multiparametric-grid canvas{height:140px}.report-multiparametric-grid figcaption{display:block;min-height:0;padding:6px}.report-multiparametric-grid figcaption strong{font-size:13px}.report-multiparametric-grid figcaption span{display:block;text-align:left;font-size:9px;max-width:none}.report-comparison-heading h4,.report-context h4{font-size:16px}.report-context{padding:10px 12px;margin-top:10px}.report-context p{font-size:12px}.report-context .report-contour-note{font-size:10px}.report-brand small{font-size:9px}}

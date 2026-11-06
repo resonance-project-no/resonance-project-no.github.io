@@ -1,5 +1,5 @@
 /* USER SETTINGS: demo defaults, pipeline timing, colours and report display. */
-const SETTINGS={heroMode:'dwi',heroSequenceInterval:1000,heroTransitionMs:220,sequenceBreastCropBottom:.62,denoise:.45,bValue:800,rotation:20,elevation:23,flowInterval:650,coRegistrationStage:2,coRegistrationHoldMs:1000,defaultReveal:52,overlayOpacity:.42,exampleBirads:'5 · Highly suggestive of malignancy',kineticBiradsByLesion:{1:'5 · Highly suggestive of malignancy',2:'4 · Suspicious',3:'2/3 · Benign / probably benign'},reportLocationOverrides:{1:'Central',2:"10 o'clock",3:"11 o'clock"}};
+const SETTINGS={heroMode:'dwi',heroSequenceInterval:1000,heroTransitionMs:220,sequenceBreastCropBottom:.62,denoise:.45,bValue:800,rotation:20,elevation:23,flowInterval:650,coRegistrationStage:2,coRegistrationHoldMs:1000,defaultReveal:52,overlayOpacity:.42,reportContourOpacity:.18,reportDetailScale:.55,reportMinZoom:1.8,reportMaxZoom:4,exampleBirads:'5 · Highly suggestive of malignancy',kineticBiradsByLesion:{1:'5 · Highly suggestive of malignancy',2:'4 · Suspicious',3:'2/3 · Benign / probably benign'},reportLocationOverrides:{1:'Central',2:"10 o'clock",3:"11 o'clock"}};
 // The kinetic display groups 2/3 for the demonstration; report assessments remain single categories.
 const reportAssessments={...SETTINGS.kineticBiradsByLesion,3:'3 · Probably benign'};
 const $=id=>document.getElementById(id);
@@ -77,14 +77,36 @@ function kineticDraw(){
  document.querySelectorAll('[data-curve]').forEach(button=>{let type=['','I','II','III'][Number(button.dataset.curve)],on=c.source==='reference'&&type===kineticReferenceType;button.classList.toggle('active',on);button.setAttribute('aria-pressed',String(on));});
 }
 document.querySelectorAll('[data-curve]').forEach(b=>b.addEventListener('click',()=>{kineticReferenceType=['','I','II','III'][Number(b.dataset.curve)];kineticDraw()}));document.querySelectorAll('[data-kinetic-phase]').forEach(button=>button.addEventListener('click',()=>{kineticPhase=Number(button.dataset.kineticPhase);$('kineticPhase').value=kineticPhase;kineticDraw();}));$('kineticPhase').addEventListener('input',e=>{kineticPhase=Number(e.target.value);kineticDraw()});let roiDragging=false;function moveROI(e){let p=KineticDemo.eventToROI($('kineticMRI'),e);if(!p)return;let hit=KineticDemo.getLesionAt('axial',p.u,p.v,kineticSlice),matched=KINETIC_REGIONS.find(region=>region.id===hit);roi={u:clamp(p.u,0,1),v:clamp(p.v,0,1),radius:matched?.roi.radius||roi.radius||KINETIC_RADIUS};kineticPreset=null;kineticReferenceType=null;kineticDraw()}$('kineticMRI').addEventListener('pointerdown',e=>{roiDragging=true;e.currentTarget.setPointerCapture(e.pointerId);moveROI(e)});let roiPointerFrame=null,roiPointerEvent=null;$('kineticMRI').addEventListener('pointermove',e=>{if(!roiDragging&&e.pointerType!=='mouse')return;roiPointerEvent={clientX:e.clientX,clientY:e.clientY};if(roiPointerFrame!==null)return;roiPointerFrame=requestAnimationFrame(()=>{roiPointerFrame=null;moveROI(roiPointerEvent)});});$('kineticMRI').addEventListener('pointerleave',()=>{if(!roiDragging&&roiPointerFrame!==null){cancelAnimationFrame(roiPointerFrame);roiPointerFrame=null;}});$('kineticMRI').addEventListener('pointerup',()=>roiDragging=false);$('kineticMRI').addEventListener('pointercancel',()=>roiDragging=false);
+let reportView='detail',reportContour=true;
+function reportFinding(id){
+ let regionIndex=KINETIC_REGIONS.findIndex(region=>region.id===id),region=KINETIC_REGIONS[regionIndex];
+ let finding=region?.common.lesions.find(lesion=>lesion.id===id);
+ if(!finding)throw new Error('Matched reporting images are unavailable for this lesion.');
+ return {...finding,patientSide:finding.side||'Breast',u:finding.center[0],v:1-finding.center[1],regionIndex,region};
+}
+function reportComparisonDraw(finding){
+ let detail=reportView==='detail',zoom=detail?clamp(SETTINGS.reportDetailScale/(2*Math.max(...finding.radii.slice(0,2))),SETTINGS.reportMinZoom,SETTINGS.reportMaxZoom):1;
+ let center=detail?[finding.u,finding.v]:undefined;
+ for(let [mode,id,name] of [['dce','reportDce','DCE'],['dwi','reportDwi','DWI'],['t2','reportT2','T2-weighted'],['adc','reportAdc','ADC map']]){
+  let imageViewer=KINETIC_VIEWERS[finding.regionIndex][mode],canvas=$(id);
+  imageViewer.draw(canvas,{view:'axial',slice:imageViewer.getDefaultSlice('axial'),mode,phase:3,mask:reportContour?'lesion':'none',region:finding.id,selected:finding.id,opacity:SETTINGS.reportContourOpacity,annotations:false,breastCrop:!detail,zoom,center});
+  canvas.setAttribute('aria-label','Lesion '+String(finding.id).padStart(2,'0')+' on '+name+'; '+(reportContour?'shared lesion contour shown':'contour hidden'));
+ }
+ document.querySelectorAll('[data-report-view]').forEach(button=>{let on=button.dataset.reportView===reportView;button.classList.toggle('active',on);button.setAttribute('aria-pressed',String(on));});
+ $('reportComparisonFinding').textContent='Lesion '+String(finding.id).padStart(2,'0')+' · matched axial views';
+ $('reportContext').textContent='Type '+finding.type+' '+finding.typeLabel.toLowerCase()+' enhancement on DCE. Compare the same finding on DWI, its ADC map and T2-weighted images.';
+ $('reportExampleBadge').textContent=finding.region.common.synthetic?'SYNTHETIC EXAMPLE':'LOCAL MRI EXAMPLE';
+}
 function reportDraw(){
- let l=LESIONS.find(x=>x.id===reportSelected)||LESIONS[0];$('biradsSelect').value=reportAssessments[l.id]??SETTINGS.exampleBirads;updateExampleAssessment();$('reportTitle').textContent='Lesion '+String(l.id).padStart(2,'0')+' · '+l.patientSide+' breast';$('reportPattern').textContent='Type '+l.type+' · '+l.typeLabel;
+ let l=reportFinding(reportSelected);$('biradsSelect').value=reportAssessments[l.id]??SETTINGS.exampleBirads;updateExampleAssessment();$('reportTitle').textContent='Lesion '+String(l.id).padStart(2,'0')+' · '+l.patientSide+' breast';$('reportPattern').textContent='Type '+l.type+' · '+l.typeLabel;
  $('reportVolume').textContent=l.volumeMl.toFixed(l.volumeMl<1?2:1)+' mL';$('reportSize').textContent=l.extentMm.map(mm=>mm.toFixed(1)).join(' × ')+' mm';
- ['reportAxial','reportCoronal','reportSagittal'].forEach((id,i)=>Demo.draw($(id),{view:'axial',slice:DATA.depth===1?.5:l.center[2],mode:'dce',phase:3,mask:i===1?'none':'lesion',region:l.id,selected:l.id,opacity:.38,zoom:i===0?1:3.4,center:i===0?[.5,.5]:[l.u,l.v],dimBase:i===2?.55:1}));
- let curve=pathFor(l.curve,500,235,52),svg=$('reportCurve');svg.replaceChildren();let axes=svgNode('g',{});svg.append(axes);drawCurveAxes(axes,curve);svg.append(svgNode('path',{d:curve.path,fill:'none',stroke:'#16879d','stroke-width':3}));curve.pts.forEach(([x,y])=>svg.append(svgNode('circle',{cx:x,cy:y,r:4,fill:'#16879d'})));
+ reportComparisonDraw(l);
+ let curve=pathFor(l.curve,500,235,52,l.region.common.kineticsTimesSeconds),svg=$('reportCurve');svg.replaceChildren();let axes=svgNode('g',{});svg.append(axes);drawCurveAxes(axes,curve);svg.append(svgNode('path',{d:curve.path,fill:'none',stroke:'#16879d','stroke-width':3}));curve.pts.forEach(([x,y])=>svg.append(svgNode('circle',{cx:x,cy:y,r:4,fill:'#16879d'})));
  let location=SETTINGS.reportLocationOverrides[l.id]||l.location,isCentral=location==='Central';let hour=parseInt(location,10),angle=((Number.isFinite(hour)?hour:12)/12*Math.PI*2)-Math.PI/2;$('locationDot').style.left=(isCentral?50:50+Math.cos(angle)*31)+'%';$('locationDot').style.top=(isCentral?50:50+Math.sin(angle)*31)+'%';$('locationDot').style.transform=isCentral?'translate(-50%,-50%)':'';$('locationText').textContent='Estimated · '+(isCentral?'Central':l.patientSide+' breast · '+(location||'location unavailable'));
 }
-$('reportLesion').addEventListener('change',e=>{reportSelected=Number(e.target.value);viewer.selected=reportSelected;selectLesion(reportSelected)});$('printReport').addEventListener('click',()=>window.print());
+document.querySelectorAll('[data-report-view]').forEach(button=>button.addEventListener('click',()=>{reportView=button.dataset.reportView;reportComparisonDraw(reportFinding(reportSelected));}));
+$('reportContourToggle').addEventListener('change',event=>{reportContour=event.target.checked;reportComparisonDraw(reportFinding(reportSelected));});
+$('reportLesion').addEventListener('change',e=>{reportSelected=Number(e.target.value);reportDraw()});$('printReport').addEventListener('click',()=>window.print());
 let menu=document.querySelector('.menu-toggle'),nav=$('navigation');menu.addEventListener('click',()=>{let open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close navigation':'Open navigation');menu.textContent=open?'×':'☰'});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.textContent='☰'}));
 let resizeTimer;function drawAll(){heroDraw();pipelineDraw();diffusionDraw();viewerDraw();kineticDraw();reportDraw()}window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(drawAll,120)});$('sliceSlider').value=Math.round(viewer.opacity*100);
 

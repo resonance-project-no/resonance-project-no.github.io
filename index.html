@@ -7,7 +7,7 @@
 <title>RESONANCE | Breast MRI research</title>
 <meta name="description" content="Explore RESONANCE breast MRI research through illustrative examples of preprocessing, segmentation, lesion localization and enhancement kinetics.">
 <link rel="icon" href="assets/mark.svg?v=synthetic-roi-boundary-20261028-1">
-<link rel="stylesheet" href="style.css?v=synthetic-roi-boundary-20261028-1">
+<link rel="stylesheet" href="style.css?v=multiparametric-report-20261106-1">
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -440,8 +440,9 @@ Compare images using the same display window.</p>
 <div class="wrap">
 <div class="section-heading">
 <div>
-<div class="eyebrow">STRUCTURED REPORTING</div>
+<div class="eyebrow">MULTIPARAMETRIC REPORTING</div>
 <h2 class="section-title"><span class="heading-phrase heading-tone-1">The finding.</span> <span class="heading-phrase heading-tone-2">The views.</span> <span class="heading-phrase heading-tone-3">The context.</span></h2>
+<p class="report-intro">Bring MRI sequences, ADC maps and lesion kinetics into one structured summary.</p>
 </div>
 <div class="report-actions">
 <label for="reportLesion">Report lesion</label>
@@ -456,9 +457,9 @@ Compare images using the same display window.</p>
 <article class="report-paper" id="reportPaper">
 <div class="report-brand">
 <img src="assets/resonance-symbol.svg?v=synthetic-roi-boundary-20261028-1" alt="RESONANCE logo">
-<span>RESONANCE<small>BREAST MRI / LESION SUMMARY</small>
+<span>RESONANCE<small>BREAST MRI / MULTIPARAMETRIC SUMMARY</small>
 </span>
-<b>MRI EXAMPLE</b>
+<b id="reportExampleBadge">MRI EXAMPLE</b>
 </div>
 <div class="report-title">
 <h3 id="reportTitle">Lesion 01 · Breast MRI</h3>
@@ -478,23 +479,44 @@ Compare images using the same display window.</p>
 <strong id="biradsValue">BI-RADS 5 · Highly suggestive of malignancy</strong>
 </div>
 </div>
-<div class="report-image-grid">
+<section class="report-comparison" aria-labelledby="reportComparisonHeading">
+<div class="report-comparison-heading">
+<div>
+<h4 id="reportComparisonHeading">Multiparametric lesion comparison</h4>
+<p id="reportComparisonFinding">One lesion across DCE, DWI, T2 and ADC.</p>
+</div>
+<div class="report-comparison-controls">
+<div class="report-view-tabs" role="group" aria-label="Reporting image view">
+<button type="button" data-report-view="detail" class="active" aria-pressed="true">Lesion detail</button>
+<button type="button" data-report-view="overview" aria-pressed="false">Whole breast</button>
+</div>
+<label class="report-contour-toggle"><input id="reportContourToggle" type="checkbox" checked> Show shared contour</label>
+</div>
+</div>
+<div class="report-image-grid report-multiparametric-grid">
 <figure>
-<figcaption>AXIAL OVERVIEW</figcaption>
-<canvas id="reportAxial" role="img" aria-label="Axial view of selected lesion">
-</canvas>
+<figcaption><strong>DCE</strong><span>Post-contrast enhancement</span></figcaption>
+<canvas id="reportDce" role="img" aria-label="Selected lesion on DCE breast MRI"></canvas>
 </figure>
 <figure>
-<figcaption>LESION DETAIL</figcaption>
-<canvas id="reportCoronal" role="img" aria-label="Axial close-up of the selected illustrated lesion">
-</canvas>
+<figcaption><strong>DWI</strong><span>Diffusion-weighted image</span></figcaption>
+<canvas id="reportDwi" role="img" aria-label="The same lesion on diffusion-weighted breast MRI"></canvas>
 </figure>
 <figure>
-<figcaption>CONTOUR DETAIL</figcaption>
-<canvas id="reportSagittal" role="img" aria-label="Contour close-up of the selected illustrated lesion">
-</canvas>
+<figcaption><strong>T2</strong><span>Tissue-signal context</span></figcaption>
+<canvas id="reportT2" role="img" aria-label="The same lesion on T2-weighted breast MRI"></canvas>
+</figure>
+<figure>
+<figcaption><strong>ADC map</strong><span>Qualitative diffusion comparison</span></figcaption>
+<canvas id="reportAdc" role="img" aria-label="The same lesion on the derived ADC map"></canvas>
 </figure>
 </div>
+<div class="report-context">
+<h4>Multiparametric context</h4>
+<p id="reportContext" aria-live="polite">Review enhancement, diffusion and T2 appearance together.</p>
+<p class="report-contour-note">The shared contour links the finding across views.</p>
+</div>
+</section>
 <div class="report-bottom-grid">
 <div>
 <h4>ESTIMATED LOCATION</h4>
@@ -516,7 +538,7 @@ Compare images using the same display window.</p>
 </div>
 <div class="birads-report">
 <h4>BI-RADS · EXAMPLE ASSESSMENT</h4>
-<p>Choose an example assessment for the structured report.</p>
+<p>Choose an example assessment for the multiparametric report.</p>
 <label for="biradsSelect">Report demonstration</label>
 <select id="biradsSelect">
 <option value="">Choose an assessment</option>
@@ -601,7 +623,7 @@ Compare images using the same display window.</p>
 <script src="kinetic-assets.js?v=synthetic-roi-boundary-20261028-1"></script>
 <script src="mri-demo.js?v=kinetic-pointer-20261029-1">
 </script>
-<script src="app.js?v=mri-terminology-20261106-1">
+<script src="app.js?v=multiparametric-report-20261106-1">
 </script>
 </body>
 </html>
