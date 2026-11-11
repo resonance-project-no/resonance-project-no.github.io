@@ -866,3 +866,17 @@ to{opacity:1;transform:translateX(0)}
 .report-context .report-contour-note{font-size:14px;line-height:1.5;color:#5a727b;margin-top:8px}
 @media(max-width:650px){.report-multiparametric-grid{grid-template-columns:minmax(0,1fr);gap:12px}.report-multiparametric-grid canvas{height:245px}.report-comparison-heading h4,.report-context h4{font-size:20px}.report-context{padding:17px}.report-context p{font-size:16px}.report-view-tabs button{font-size:14px}}
 @media print{.report-comparison-controls{display:none!important}.report-comparison{break-inside:avoid}.report-multiparametric-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.report-multiparametric-grid canvas{height:140px}.report-multiparametric-grid figcaption{display:block;min-height:0;padding:6px}.report-multiparametric-grid figcaption strong{font-size:13px}.report-multiparametric-grid figcaption span{display:block;text-align:left;font-size:9px;max-width:none}.report-comparison-heading h4,.report-context h4{font-size:16px}.report-context{padding:10px 12px;margin-top:10px}.report-context p{font-size:12px}.report-context .report-contour-note{font-size:10px}.report-brand small{font-size:9px}}
+
+/* Additional team members: initials until profile portraits are available. */
+.team-grid-additional{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:28px}
+.team-grid-additional article{display:flex;align-items:flex-start;gap:22px;padding:28px}
+.team-grid-additional article>div{padding:0;min-width:0}
+.team-grid-additional .team-initials{flex:0 0 76px;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#164b59,#26847c);color:#e2fff0;font-size:25px;font-weight:700;letter-spacing:.04em}
+.team-grid-additional article:nth-child(2) .team-initials{background:linear-gradient(145deg,#3c477e,#7e78ad)}
+.team-grid-additional article:nth-child(3) .team-initials{background:linear-gradient(145deg,#a36f2c,#e5b86b);color:#163d48}
+.team-grid-additional article:nth-child(4) .team-initials{background:linear-gradient(145deg,#236c69,#5bab99)}
+.team-grid-additional h3{font-size:25px;line-height:1.2;margin:12px 0}
+.team-grid-additional p{font-size:17px;line-height:1.6}
+.team-grid-additional a{margin-top:16px}
+@media(max-width:900px){.team-grid-additional{grid-template-columns:1fr}.team-grid-additional article{display:flex}.team-grid-additional article>div{padding:0}}
+@media(max-width:450px){.team-grid-additional article{gap:16px;padding:22px}.team-grid-additional .team-initials{flex-basis:56px;width:56px;height:56px;font-size:20px}.team-grid-additional h3{font-size:23px}.team-grid-additional p{font-size:17px}}
